@@ -3,7 +3,17 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 async function getChat(req, res, next) {
-    console.log("A");
+    if(req.body.user && req.body.say){
+        const c = new Chat({
+            user: req.body.user,
+            say: req.body.say
+        });
+        try{
+            await c.save();
+        } catch (err){
+            res.status(400).json({ message: err.message });
+        }
+    }
     let chat;
     try {
         chat = await Chat.find({});
@@ -33,19 +43,7 @@ async function rmv(req, res, next) {
     // 在router中執行middleware後需要使用next()才會繼續往下跑
     next();
 }
-router.get("/chat", async (req, res) => {
-    if(req.body.user && req.body.say){
-        const c = new Chat({
-            user: req.body.user,
-            say: req.body.say
-        });
-        try{
-            await c.save();
-        } catch (err){
-            res.status(400).json({ message: err.message });
-        }
-    }
-    getChat();
+router.get("/chat", getChat, async (req, res) => {
     res.send(res.chat);
 });
 router.get("/chat/clear", rmv, async (req, res) => {
