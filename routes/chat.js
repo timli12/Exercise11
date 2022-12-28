@@ -3,11 +3,15 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 async function getChat(req, res, next) {
-    console.log(req.query.user, req.query.say)
     if(req.query.user && req.query.say){
+        var t = new Date();
+        var ampm = t.getHours >= 12 ? '下午' : '早上';
+        var hours = t.getHours() % 12;
+        var str = t.getFullYear().toString() + "/" + t.getMonth().toString() + "/" + t.getDate().toString() + ampm.toString() + hours.toString + ":" + t.getMinutes().toString() + ":" + t.getSeconds().toString();
         const c = new Chat({
             user: req.query.user,
-            say: req.query.say
+            say: req.query.say,
+            time: str
         });
         try{
             await c.save();

@@ -10,7 +10,7 @@ const c = new mongoose.Schema({
     },
     time: {
         type: String,
-        default: Date
+        required: true
     }
 });
 module.exports = mongoose.model("chat", c);
