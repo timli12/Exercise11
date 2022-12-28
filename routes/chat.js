@@ -13,7 +13,7 @@ async function getChat(req, res, next) {
         return res.status(500).json({ message: err.message })
     }
     // 如果有該事項 則將他加入到res中
-    res.chat = chat
+    res.chat = chat;
     // 在router中執行middleware後需要使用next()才會繼續往下跑
     next();
 }
@@ -33,7 +33,7 @@ async function rmv(req, res, next) {
     next();
 }
 router.get("/chat", async (req, res) => {
-    if(req.body.user != "" || req.body.say != ""){
+    if(req.body.user && req.body.say){
         const chat = new Chat({
             user: req.body.user,
             say: req.body.say
