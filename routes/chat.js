@@ -40,7 +40,7 @@ async function rmv(req, res, next) {
         return res.status(500).json({ message: err.message })
     }
     // 如果有該事項 則將他加入到res中
-    res.chat.remove()
+    chat.remove()
     // 在router中執行middleware後需要使用next()才會繼續往下跑
     next();
 }
