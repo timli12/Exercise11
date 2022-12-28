@@ -3,7 +3,7 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 var chatRecords = [];
-router.get("/chat", async (req, res) => {
+router.get("/chat", putChat, async (req, res) => {
     res.send(res.chat);
 });
 router.get("/chat/clear", async (req, res) => {
@@ -25,7 +25,7 @@ async function putChat(req, res, next) {
     });
     chatRecords.push(chat);
     for(let obj of chatRecords){
-        res.chat = chat;
+        res.chat = obj;
         next();
     }
 }
