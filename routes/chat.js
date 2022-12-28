@@ -32,9 +32,9 @@ async function getChat(req, res, next) {
 async function rmv(req, res, next) {
     let chat;
     try {
-        chat = await Chat.findById(req.query.id)
+        chat = await Chat.find({})
         if (chat == undefined) {
-            return res.status(404).json({ message: "Can't find form" })
+            return res.status(404).json({ message: "Can't find chat" })
         }
     } catch (err) {
         return res.status(500).json({ message: err.message })
