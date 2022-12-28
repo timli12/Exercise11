@@ -35,6 +35,7 @@ router.get("/chat", getChat, async (req, res) => {
 router.get("/chat/clear", async (req, res) => {
     try{
         await Chat.deleteMany({});
+        res.send("success");
     } catch (err){
         res.status(400).json({ message: err.message });
     }
