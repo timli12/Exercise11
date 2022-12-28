@@ -33,7 +33,11 @@ router.get("/chat", getChat, async (req, res) => {
     res.send(res.chat);
 });
 router.get("/chat/clear", async (req, res) => {
-    await Chat.deleteMany({});
+    try{
+        await Chat.deleteMany({});
+    } catch (err){
+        res.status(400).json({ message: err.message });
+    }
 });
 router.get("/chat/save", async (req, res) => {
     res.send("success");
