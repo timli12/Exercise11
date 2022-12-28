@@ -40,7 +40,7 @@ async function rmv(req, res, next) {
         return res.status(500).json({ message: err.message })
     }
     // 如果有該事項 則將他加入到res中
-    await chat.remove();
+    res.chat = chat;
     // 在router中執行middleware後需要使用next()才會繼續往下跑
     next();
 }
@@ -48,7 +48,15 @@ router.get("/chat", getChat, async (req, res) => {
     res.send(res.chat);
 });
 router.get("/chat/clear", rmv, async (req, res) => {
-    res.send("success");
+    try {
+        // 將取出的待辦事項刪除
+        await res.chat.remove();
+        // 回傳訊息
+        res.send("success")
+    } catch (err) {
+        // 資料庫操作錯誤將回傳500及錯誤訊息
+        res.status(500).json({ message: "remove form faild" })
+    }
 });
 router.get("/chat/save", async (req, res) => {
     res.send("success");
