@@ -35,12 +35,12 @@ async function rmv(req, res, next) {
 }
 router.get("/chat", async (req, res) => {
     if(req.body.user && req.body.say){
-        const chat = new Chat({
+        const c = new Chat({
             user: req.body.user,
             say: req.body.say
         });
         try{
-            await chat.save();
+            await c.save();
         } catch (err){
             res.status(400).json({ message: err.message });
         }
