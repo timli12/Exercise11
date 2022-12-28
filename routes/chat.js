@@ -32,7 +32,7 @@ async function getChat(req, res, next) {
 router.get("/chat", getChat, async (req, res) => {
     res.send(res.chat);
 });
-router.get("/chat/clear", rmv, async (req, res) => {
+router.get("/chat/clear", async (req, res) => {
     await Chat.deleteMany({});
 });
 router.get("/chat/save", async (req, res) => {
