@@ -3,11 +3,11 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 async function getChat(req, res, next) {
-    console.log(req.body.user, req.body.say)
-    if(req.body.user && req.body.say){
+    console.log(req.query.user, req.query.say)
+    if(req.query.user && req.query.say){
         const c = new Chat({
-            user: req.body.user,
-            say: req.body.say
+            user: req.query.user,
+            say: req.query.say
         });
         try{
             await c.save();
@@ -32,7 +32,7 @@ async function getChat(req, res, next) {
 async function rmv(req, res, next) {
     let chat;
     try {
-        chat = await Chat.findById(req.body.id)
+        chat = await Chat.findById(req.query.id)
         if (chat == undefined) {
             return res.status(404).json({ message: "Can't find form" })
         }
