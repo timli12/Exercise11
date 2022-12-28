@@ -3,6 +3,7 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 async function getChat(req, res, next) {
+    console.log("A");
     let chat;
     try {
         chat = await Chat.find({});
