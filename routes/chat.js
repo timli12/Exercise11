@@ -3,8 +3,8 @@ const Chat = require("../models/chat");
 const router = express.Router();
 router.use(express.urlencoded({ extended: true }));
 async function getChat(req, res, next) {
+    console.log(req.body.user, req.body.say)
     if(req.body.user && req.body.say){
-        console.log("B")
         const c = new Chat({
             user: req.body.user,
             say: req.body.say
