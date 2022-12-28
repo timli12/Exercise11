@@ -6,9 +6,10 @@ async function getChat(req, res, next) {
     if(req.query.user && req.query.say){
         var t = new Date();
         var ampm = t.getHours >= 12 ? '下午' : '早上';
-        var hours = t.getHours();
-        hours %= 12;
-        var str = t.getFullYear().toString() + "/" + t.getMonth().toString() + "/" + t.getDate().toString() + " " + ampm + hours.toString() + ":" + t.getMinutes().toString() + ":" + t.getSeconds().toString();
+        var hours = (t.getHours() % 12) >= 10 ? (t.getHours() % 12).toString() : '0'+(t.getHours() % 12).toString();
+        var mins = t.getMinutes() >= 10 ? t.getMinutes().toString() : '0'+t.getMinutes().toString();
+        var secs = t.getSeconds() >= 10 ? t.getSeconds().toString() : '0'+t.getSeconds().toString();
+        var str = t.getFullYear().toString() + "/" + t.getMonth().toString() + "/" + t.getDate().toString() + " " + ampm + hours + ":" + mins + ":" + secs;
         const c = new Chat({
             user: req.query.user,
             say: req.query.say,
